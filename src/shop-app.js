@@ -407,7 +407,7 @@ class ShopApp extends PolymerElement {
         // When a load failed, it triggered a 404 which means we need to
         // eagerly load the 404 page definition
         let cb = this._pageLoaded.bind(this, Boolean(oldPage));
-        import('shop-' + page + '.html').then(cb, cb);
+        import('./shop-' + page + '.js').then(cb, cb);
       }
     }
   }
