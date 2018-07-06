@@ -7,10 +7,9 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { PolymerElement } from "../node_modules/@polymer/polymer/polymer-element.js";
+import "../node_modules/@polymer/iron-flex-layout/iron-flex-layout.js";
+import { html } from "../node_modules/@polymer/polymer/lib/utils/html-tag.js";
 
 class ShopListItem extends PolymerElement {
   static get template() {
@@ -57,17 +56,20 @@ class ShopListItem extends PolymerElement {
 `;
   }
 
-  static get is() { return 'shop-list-item'; }
+  static get is() {
+    return 'shop-list-item';
+  }
 
-  static get properties() { return {
-
-    item: Object
-
-  }}
+  static get properties() {
+    return {
+      item: Object
+    };
+  }
 
   _formatPrice(price) {
     return price ? '$' + price.toFixed(2) : '';
   }
+
 }
 
 customElements.define(ShopListItem.is, ShopListItem);

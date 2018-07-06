@@ -7,18 +7,17 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-
-import '@polymer/app-route/app-route.js';
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import { PolymerElement } from "../node_modules/@polymer/polymer/polymer-element.js";
+import "../node_modules/@polymer/app-route/app-route.js";
+import "../node_modules/@polymer/iron-flex-layout/iron-flex-layout.js";
 import './shop-button.js';
 import './shop-category-data.js';
 import './shop-common-styles.js';
 import './shop-image.js';
 import './shop-select.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
-import { microTask } from '@polymer/polymer/lib/utils/async.js';
+import { html } from "../node_modules/@polymer/polymer/lib/utils/html-tag.js";
+import { Debouncer } from "../node_modules/@polymer/polymer/lib/utils/debounce.js";
+import { microTask } from "../node_modules/@polymer/polymer/lib/utils/async.js";
 
 class ShopDetail extends PolymerElement {
   static get template() {
@@ -194,55 +193,52 @@ class ShopDetail extends PolymerElement {
 `;
   }
 
-  static get is() { return 'shop-detail'; }
+  static get is() {
+    return 'shop-detail';
+  }
 
-  static get properties() { return {
+  static get properties() {
+    return {
+      item: Object,
+      route: Object,
+      routeData: Object,
+      visible: {
+        type: Boolean,
+        value: false
+      },
+      offline: {
+        type: Boolean,
+        observer: '_offlineChanged'
+      },
+      failure: Boolean
+    };
+  }
 
-    item: Object,
-
-    route: Object,
-
-    routeData: Object,
-
-    visible: {
-      type: Boolean,
-      value: false
-    },
-
-    offline: {
-      type: Boolean,
-      observer: '_offlineChanged'
-    },
-
-    failure: Boolean
-
-  }}
-
-  static get observers() { return [
-    '_itemChanged(item, visible)'
-  ]}
+  static get observers() {
+    return ['_itemChanged(item, visible)'];
+  }
 
   _itemChanged(item, visible) {
     if (visible) {
-      this._itemChangeDebouncer = Debouncer.debounce(this._itemChangeDebouncer,
-        microTask, () => {
-          // The item description contains escaped HTML (e.g. "&lt;br&gt;"), so we need to
-          // unescape it ("<br>") and set it as innerHTML.
-          let text = item ? item.description : '';
-          this.$.desc.innerHTML = this._unescapeText(text);
+      this._itemChangeDebouncer = Debouncer.debounce(this._itemChangeDebouncer, microTask, () => {
+        // The item description contains escaped HTML (e.g. "&lt;br&gt;"), so we need to
+        // unescape it ("<br>") and set it as innerHTML.
+        let text = item ? item.description : '';
+        this.$.desc.innerHTML = this._unescapeText(text); // Reset the select menus.
 
-          // Reset the select menus.
-          this.$.quantitySelect.value = '1';
-          this.$.sizeSelect.value = 'M';
-
-          this.dispatchEvent(new CustomEvent('change-section', {
-            bubbles: true, composed: true, detail: {
-              category: item ? item.category : '',
-              title: item ? item.title : '',
-              description: item ? item.description.substring(0, 100) : '',
-              image: item ? this.baseURI + item.image : ''
-            }}));
-        })
+        this.$.quantitySelect.value = '1';
+        this.$.sizeSelect.value = 'M';
+        this.dispatchEvent(new CustomEvent('change-section', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            category: item ? item.category : '',
+            title: item ? item.title : '',
+            description: item ? item.description.substring(0, 100) : '',
+            image: item ? this.baseURI + item.image : ''
+          }
+        }));
+      });
     }
   }
 
@@ -259,11 +255,14 @@ class ShopDetail extends PolymerElement {
   _addToCart() {
     // This event will be handled by shop-app.
     this.dispatchEvent(new CustomEvent('add-cart-item', {
-      bubbles: true, composed: true, detail: {
+      bubbles: true,
+      composed: true,
+      detail: {
         item: this.item,
         quantity: parseInt(this.$.quantitySelect.value, 10),
         size: this.$.sizeSelect.value
-      }}));
+      }
+    }));
   }
 
   _isDefined(item) {
@@ -279,6 +278,7 @@ class ShopDetail extends PolymerElement {
       this._tryReconnect();
     }
   }
+
 }
 
 customElements.define(ShopDetail.is, ShopDetail);

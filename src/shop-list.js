@@ -7,17 +7,16 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-
-import '@polymer/app-route/app-route.js';
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import { PolymerElement } from "../node_modules/@polymer/polymer/polymer-element.js";
+import "../node_modules/@polymer/app-route/app-route.js";
+import "../node_modules/@polymer/iron-flex-layout/iron-flex-layout.js";
 import './shop-category-data.js';
 import './shop-common-styles.js';
 import './shop-image.js';
 import './shop-list-item.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
-import { microTask } from '@polymer/polymer/lib/utils/async.js';
+import { html } from "../node_modules/@polymer/polymer/lib/utils/html-tag.js";
+import { Debouncer } from "../node_modules/@polymer/polymer/lib/utils/debounce.js";
+import { microTask } from "../node_modules/@polymer/polymer/lib/utils/async.js";
 
 class ShopList extends PolymerElement {
   static get template() {
@@ -113,33 +112,30 @@ class ShopList extends PolymerElement {
 `;
   }
 
-  static get is() { return 'shop-list'; }
+  static get is() {
+    return 'shop-list';
+  }
 
-  static get properties() { return {
+  static get properties() {
+    return {
+      category: Object,
+      route: Object,
+      routeData: Object,
+      visible: {
+        type: Boolean,
+        value: false
+      },
+      offline: {
+        type: Boolean,
+        observer: '_offlineChanged'
+      },
+      failure: Boolean
+    };
+  }
 
-    category: Object,
-
-    route: Object,
-
-    routeData: Object,
-
-    visible: {
-      type: Boolean,
-      value: false
-    },
-
-    offline: {
-      type: Boolean,
-      observer: '_offlineChanged'
-    },
-
-    failure: Boolean
-
-  }}
-
-  static get observers() { return [
-    '_categoryChanged(category, visible)'
-  ]}
+  static get observers() {
+    return ['_categoryChanged(category, visible)'];
+  }
 
   connectedCallback() {
     super.connectedCallback();
@@ -153,7 +149,7 @@ class ShopList extends PolymerElement {
 
   _getListItems(items) {
     // Return placeholder items when the items haven't loaded yet.
-    return items || [{},{},{},{},{},{},{},{},{},{}];
+    return items || [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
   }
 
   _getItemHref(item) {
@@ -166,29 +162,35 @@ class ShopList extends PolymerElement {
     if (!quantity) {
       return '';
     }
+
     let pluralizedQ = quantity === 1 ? 'item' : 'items';
-    return  '(' + quantity + ' ' + pluralizedQ + ')';
+    return '(' + quantity + ' ' + pluralizedQ + ')';
   }
 
   _categoryChanged(category, visible) {
     if (!visible) {
       return;
     }
-    this._changeSectionDebouncer = Debouncer.debounce(this._changeSectionDebouncer,
-      microTask, () => {
-        if (category) {
-          // Notify the category and the page's title
-          this.dispatchEvent(new CustomEvent('change-section', {
-            bubbles: true, composed: true, detail: {
-              category: category.name,
-              title: category.title,
-              image: this.baseURI + category.image
-            }}));
-        } else {
-          this.dispatchEvent(new CustomEvent('show-invalid-url-warning', {
-            bubbles: true, composed: true}));
-        }
-      });
+
+    this._changeSectionDebouncer = Debouncer.debounce(this._changeSectionDebouncer, microTask, () => {
+      if (category) {
+        // Notify the category and the page's title
+        this.dispatchEvent(new CustomEvent('change-section', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            category: category.name,
+            title: category.title,
+            image: this.baseURI + category.image
+          }
+        }));
+      } else {
+        this.dispatchEvent(new CustomEvent('show-invalid-url-warning', {
+          bubbles: true,
+          composed: true
+        }));
+      }
+    });
   }
 
   _tryReconnect() {
@@ -200,6 +202,7 @@ class ShopList extends PolymerElement {
       this._tryReconnect();
     }
   }
+
 }
 
 customElements.define(ShopList.is, ShopList);

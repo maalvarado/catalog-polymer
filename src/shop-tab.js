@@ -7,13 +7,11 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import { PolymerElement } from "../node_modules/@polymer/polymer/polymer-element.js";
+import "../node_modules/@polymer/iron-flex-layout/iron-flex-layout.js";
 import './shop-ripple-container.js';
 const $_documentContainer = document.createElement('template');
 $_documentContainer.setAttribute('style', 'display: none;');
-
 $_documentContainer.innerHTML = `<dom-module id="shop-tab">
   <template strip-whitespace="">
     <style>
@@ -48,10 +46,13 @@ $_documentContainer.innerHTML = `<dom-module id="shop-tab">
   </template>
   
 </dom-module>`;
-
 document.head.appendChild($_documentContainer.content);
+
 class ShopTab extends PolymerElement {
-  static get is() { return 'shop-tab'; }
+  static get is() {
+    return 'shop-tab';
+  }
+
 }
 
 customElements.define(ShopTab.is, ShopTab);

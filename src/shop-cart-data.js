@@ -7,10 +7,9 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-
-import '@polymer/app-storage/app-localstorage/app-localstorage-document.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { PolymerElement } from "../node_modules/@polymer/polymer/polymer-element.js";
+import "../node_modules/@polymer/app-storage/app-localstorage/app-localstorage-document.js";
+import { html } from "../node_modules/@polymer/polymer/lib/utils/html-tag.js";
 
 class ShopCartData extends PolymerElement {
   static get template() {
@@ -19,40 +18,43 @@ class ShopCartData extends PolymerElement {
 `;
   }
 
-  static get is() { return 'shop-cart-data'; }
+  static get is() {
+    return 'shop-cart-data';
+  }
 
-  static get properties() { return {
-
-    cart: {
-      type: Array,
-      value: () => [],
-      notify: true
-    },
-
-    numItems: {
-      type: Number,
-      computed: '_computeNumItems(cart.splices)',
-      notify: true
-    },
-
-    total: {
-      type: Number,
-      computed: '_computeTotal(cart.splices)',
-      notify: true
-    }
-
-  }}
+  static get properties() {
+    return {
+      cart: {
+        type: Array,
+        value: () => [],
+        notify: true
+      },
+      numItems: {
+        type: Number,
+        computed: '_computeNumItems(cart.splices)',
+        notify: true
+      },
+      total: {
+        type: Number,
+        computed: '_computeTotal(cart.splices)',
+        notify: true
+      }
+    };
+  }
 
   addItem(detail) {
     let i = this._indexOfEntry(detail.item.name, detail.size);
+
     if (i !== -1) {
       detail.quantity += this.cart[i].quantity;
     }
+
     this.setItem(detail);
   }
 
   setItem(detail) {
     let i = this._indexOfEntry(detail.item.name, detail.size);
+
     if (detail.quantity === 0) {
       // Remove item from cart when the new quantity is 0.
       if (i !== -1) {
@@ -97,6 +99,7 @@ class ShopCartData extends PolymerElement {
     if (this.cart) {
       for (let i = 0; i < this.cart.length; ++i) {
         let entry = this.cart[i];
+
         if (entry.item.name === name && entry.size === size) {
           return i;
         }
@@ -105,6 +108,7 @@ class ShopCartData extends PolymerElement {
 
     return -1;
   }
+
 }
 
 customElements.define(ShopCartData.is, ShopCartData);

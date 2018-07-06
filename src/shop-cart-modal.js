@@ -7,17 +7,15 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
-import '@polymer/paper-icon-button/paper-icon-button.js';
-import { IronOverlayBehaviorImpl } from '@polymer/iron-overlay-behavior/iron-overlay-behavior.js';
+import { PolymerElement } from "../node_modules/@polymer/polymer/polymer-element.js";
+import "../node_modules/@polymer/iron-flex-layout/iron-flex-layout.js";
+import "../node_modules/@polymer/paper-icon-button/paper-icon-button.js";
+import { IronOverlayBehaviorImpl } from "../node_modules/@polymer/iron-overlay-behavior/iron-overlay-behavior.js";
 import './shop-button.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
+import { html } from "../node_modules/@polymer/polymer/lib/utils/html-tag.js";
+import { mixinBehaviors } from "../node_modules/@polymer/polymer/lib/legacy/class.js";
 
-class ShopCartModal extends mixinBehaviors(
-  [IronOverlayBehaviorImpl], PolymerElement) {
+class ShopCartModal extends mixinBehaviors([IronOverlayBehaviorImpl], PolymerElement) {
   static get template() {
     return html`
     <style include="shop-button">
@@ -106,21 +104,25 @@ class ShopCartModal extends mixinBehaviors(
 `;
   }
 
-  static get is() { return 'shop-cart-modal'; }
+  static get is() {
+    return 'shop-cart-modal';
+  }
 
-  static get properties() { return {
-    withBackdrop: {
-      type: Boolean,
-      value: true
-    }
-  }}
+  static get properties() {
+    return {
+      withBackdrop: {
+        type: Boolean,
+        value: true
+      }
+    };
+  }
 
   ready() {
     super.ready();
     this.setAttribute('role', 'dialog');
     this.setAttribute('aria-modal', 'true');
-    this.addEventListener('transitionend', (e)=>this._transitionEnd(e));
-    this.addEventListener('iron-overlay-canceled', (e)=>this._onCancel(e));
+    this.addEventListener('transitionend', e => this._transitionEnd(e));
+    this.addEventListener('iron-overlay-canceled', e => this._onCancel(e));
   }
 
   _renderOpened() {
@@ -144,11 +146,14 @@ class ShopCartModal extends mixinBehaviors(
     if (e.target !== this || e.propertyName !== 'transform') {
       return;
     }
+
     if (this.opened) {
       this._finishRenderOpened();
+
       this.fire('announce', 'Item added to the cart');
     } else {
       this._finishRenderClosed();
+
       this.backdropElement.style.display = '';
     }
   }
@@ -160,6 +165,7 @@ class ShopCartModal extends mixinBehaviors(
   refit() {}
 
   notifyResize() {}
+
 }
 
 customElements.define(ShopCartModal.is, ShopCartModal);

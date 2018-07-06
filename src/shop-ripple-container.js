@@ -7,14 +7,12 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-
-import { PaperRippleBehavior } from '@polymer/paper-behaviors/paper-ripple-behavior.js';
-import { addListener } from '@polymer/polymer/lib/utils/gestures.js';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
+import { PolymerElement } from "../node_modules/@polymer/polymer/polymer-element.js";
+import { PaperRippleBehavior } from "../node_modules/@polymer/paper-behaviors/paper-ripple-behavior.js";
+import { addListener } from "../node_modules/@polymer/polymer/lib/utils/gestures.js";
+import { mixinBehaviors } from "../node_modules/@polymer/polymer/lib/legacy/class.js";
 const $_documentContainer = document.createElement('template');
 $_documentContainer.setAttribute('style', 'display: none;');
-
 $_documentContainer.innerHTML = `<dom-module id="shop-ripple-container">
   <template strip-whitespace="">
     <style>
@@ -31,13 +29,12 @@ $_documentContainer.innerHTML = `<dom-module id="shop-ripple-container">
   </template>
   
 </dom-module>`;
-
 document.head.appendChild($_documentContainer.content);
 
-class ShopRippleContainer extends mixinBehaviors(
-  [PaperRippleBehavior], PolymerElement) {
-
-  static get is() { return 'shop-ripple-container'; }
+class ShopRippleContainer extends mixinBehaviors([PaperRippleBehavior], PolymerElement) {
+  static get is() {
+    return 'shop-ripple-container';
+  }
 
   constructor() {
     super();
@@ -46,8 +43,8 @@ class ShopRippleContainer extends mixinBehaviors(
 
   ready() {
     super.ready();
-    this.addEventListener('focus', (e)=>this._onFocus(e), true);
-    this.addEventListener('blur', (e)=>this._onBlur(e), true);
+    this.addEventListener('focus', e => this._onFocus(e), true);
+    this.addEventListener('blur', e => this._onBlur(e), true);
     addListener(this, 'down', this._rippleDown);
     addListener(this, 'up', this._rippleUp);
   }

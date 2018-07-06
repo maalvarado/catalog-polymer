@@ -2,11 +2,11 @@
   "entrypoint": "index.html",
   "shell": "src/shop-app.js",
   "fragments": [
-    "src/shop-list.html",
-    "src/shop-detail.html",
-    "src/shop-cart.html",
-    "src/shop-checkout.html",
-    "src/lazy-resources.html"
+    "src/shop-list.js",
+    "src/shop-detail.js",
+    "src/shop-cart.js",
+    "src/shop-checkout.js",
+    "src/lazy-resources.js"
   ],
   "sources": [
     "src/**/*",
@@ -15,11 +15,8 @@
   ],
   "extraDependencies": [
     "manifest.json",
-    "node_modules/webcomponentsjs/*"
+    "node_modules/@webcomponents/webcomponentsjs/*.js"
   ],
-  "lint": {
-    "rules": ["polymer-2-hybrid"]
-  },
   "builds": [
     {
       "preset": "es5-bundled"
@@ -30,5 +27,12 @@
     {
       "preset": "es6-bundled"
     }
-  ]
+  ],
+  "moduleResolution": "node",
+  "npm": true,
+  "lint": {
+    "rules": [
+      "polymer-3"
+    ]
+  }
 }

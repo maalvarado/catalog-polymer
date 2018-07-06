@@ -7,11 +7,10 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-
+import { PolymerElement } from "../node_modules/@polymer/polymer/polymer-element.js";
 import './shop-button.js';
 import './shop-image.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { html } from "../node_modules/@polymer/polymer/lib/utils/html-tag.js";
 
 class ShopHome extends PolymerElement {
   static get template() {
@@ -115,27 +114,34 @@ class ShopHome extends PolymerElement {
 `;
   }
 
-  static get is() { return 'shop-home'; }
+  static get is() {
+    return 'shop-home';
+  }
 
-  static get properties() { return {
-
-    categories: {
-      type: Array
-    },
-
-    visible: {
-      type: Boolean,
-      observer: '_visibleChanged'
-    }
-
-  }}
+  static get properties() {
+    return {
+      categories: {
+        type: Array
+      },
+      visible: {
+        type: Boolean,
+        observer: '_visibleChanged'
+      }
+    };
+  }
 
   _visibleChanged(visible) {
     if (visible) {
       this.dispatchEvent(new CustomEvent('change-section', {
-        bubbles: true, composed: true, detail: {title: 'Home'}}));
+        bubbles: true,
+        composed: true,
+        detail: {
+          title: 'Home'
+        }
+      }));
     }
   }
+
 }
 
 customElements.define(ShopHome.is, ShopHome);

@@ -7,10 +7,9 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { PolymerElement } from "../node_modules/@polymer/polymer/polymer-element.js";
+import "../node_modules/@polymer/iron-flex-layout/iron-flex-layout.js";
+import { html } from "../node_modules/@polymer/polymer/lib/utils/html-tag.js";
 
 class ShopImage extends PolymerElement {
   static get template() {
@@ -41,28 +40,29 @@ class ShopImage extends PolymerElement {
 `;
   }
 
-  static get is() { return 'shop-image'; }
+  static get is() {
+    return 'shop-image';
+  }
 
-  static get properties() { return {
-
-    alt: String,
-
-    src: {
-      type: String,
-      observer: '_srcChanged'
-    },
-
-    placeholderImg: {
-      type: String,
-      observer: '_placeholderImgChanged'
-    }
-
-  }}
+  static get properties() {
+    return {
+      alt: String,
+      src: {
+        type: String,
+        observer: '_srcChanged'
+      },
+      placeholderImg: {
+        type: String,
+        observer: '_placeholderImgChanged'
+      }
+    };
+  }
 
   _srcChanged(src) {
     this.$.img.removeAttribute('src');
     this.$.img.style.transition = '';
     this.$.img.style.opacity = 0;
+
     if (src) {
       this.$.img.src = src;
     }
@@ -82,6 +82,7 @@ class ShopImage extends PolymerElement {
   _placeholderImgChanged(placeholder) {
     this.style.backgroundImage = 'url(\'' + placeholder + '\')';
   }
+
 }
 
 customElements.define(ShopImage.is, ShopImage);
